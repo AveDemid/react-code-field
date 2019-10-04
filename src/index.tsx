@@ -38,7 +38,7 @@ export const changeValueInArr = (
   return Object.assign([...arr], { [idx]: newValue });
 };
 
-export const ReactCodeField = ({ fields }: ReactCodeFieldProps) => {
+const ReactCodeField = ({ fields }: ReactCodeFieldProps) => {
   // Input references
   const fieldRefs = useRef<HTMLInputElement[]>([]);
 
@@ -112,3 +112,5 @@ export const ReactCodeField = ({ fields }: ReactCodeFieldProps) => {
     </div>
   );
 };
+
+export default ReactCodeField;
