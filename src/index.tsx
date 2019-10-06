@@ -11,6 +11,8 @@ interface ReactCodeFieldProps {
   onChange(s: string): void;
   inputType: "text" | "password" | "number";
   listBannedChars: string[];
+  containerClassName: string;
+  inputClassName: string;
 }
 
 // prettier-ignore
@@ -49,7 +51,9 @@ export const ReactCodeField = ({
   fields,
   onChange,
   inputType,
-  listBannedChars
+  listBannedChars,
+  containerClassName,
+  inputClassName
 }: ReactCodeFieldProps) => {
   const fieldRefs = useRef<HTMLInputElement[]>([]);
 
@@ -185,7 +189,7 @@ export const ReactCodeField = ({
   }, [fieldValues, onChange]);
 
   return (
-    <div style={{ display: "flex" }}>
+    <div className={containerClassName}>
       {fieldValues.map((value, idx) => (
         <input
           key={idx}
@@ -200,12 +204,7 @@ export const ReactCodeField = ({
           onKeyDown={handleKeyDown}
           onMouseDown={handleMouseDown}
           onChange={e => e.preventDefault()}
-          style={{
-            width: "30px",
-            height: "30px",
-            textAlign: "center",
-            fontSize: "20px"
-          }}
+          className={inputClassName}
         />
       ))}
     </div>
