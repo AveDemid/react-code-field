@@ -5,7 +5,6 @@ module.exports = {
   entry: "./src/index.tsx",
   output: {
     path: path.resolve("lib"),
-    libraryTarget: "commonjs2",
     filename: "index.js"
   },
   module: {
@@ -22,6 +21,9 @@ module.exports = {
         ]
       }
     ]
+  },
+  resolve: {
+    extensions: [".ts", ".tsx", ".js", ".jsx"]
   },
   externals: {
     react: {
