@@ -1,60 +1,17 @@
 import React, { useState, useRef, useEffect } from "react";
 
-const BACKSPACE_KEY = 8;
-const TAB_KEY = 9;
-const LEFT_ARROW = 37;
-const RIGHT_ARROW = 39;
-const E_KEY = 69;
-
-interface ReactCodeFieldProps {
-  fields: number;
-  onChange(s: string): void;
-  inputType: "text" | "password" | "number";
-  listBannedChars: string[];
-  containerClassName: string;
-  inputClassName: string;
-}
-
-// prettier-ignore
-export const mergeArrays = (arr1: string[], arr2: string[], offset: number) =>
-  arr1.map((oldValue, idx) =>
-    idx >= offset && arr2[idx - offset]
-      ? arr2[idx - offset]
-      : oldValue
-  );
-
-export const getNextFocusedFieldIndex = (
-  startPosition: number,
-  offset: number,
-  lastIndex: number
-) => {
-  if (startPosition + offset < 0) {
-    return 0;
-  }
-
-  if (startPosition + offset < lastIndex) {
-    return startPosition + offset;
-  }
-
-  return lastIndex;
-};
-
-export const changeValueInArr = (
-  arr: string[],
-  newValue: string,
-  idx: number
-) => {
-  return Object.assign([...arr], { [idx]: newValue });
-};
+import { KEYS } from "./keys";
+import { mergeArrays, getNextFocusedFieldIdx, changeValueInArr } from "./utils";
+import { IReactCodeField } from "./types";
 
 export const ReactCodeField = ({
   fields,
   onChange,
   inputType,
   listBannedChars,
-  containerClassName,
+  className,
   inputClassName
-}: ReactCodeFieldProps) => {
+}: IReactCodeField) => {
   const fieldRefs = useRef<HTMLInputElement[]>([]);
 
   const [fieldValues, setFieldValues] = useState<string[]>(
@@ -82,7 +39,7 @@ export const ReactCodeField = ({
     }
 
     const nextFieldValues = mergeArrays(fieldValues, handledValue, idx);
-    const nextFocusedFieldIdx = getNextFocusedFieldIndex(
+    const nextFocusedFieldIdx = getNextFocusedFieldIdx(
       idx,
       handledValue.length,
       fields - 1
@@ -94,19 +51,19 @@ export const ReactCodeField = ({
 
   const handleBackspaceKeyDown = (value: string, idx: number) => {
     const nextValue = changeValueInArr(fieldValues, "", idx);
-    const nextFocusedFieldIdx = getNextFocusedFieldIndex(idx, -1, fields - 1);
+    const nextFocusedFieldIdx = getNextFocusedFieldIdx(idx, -1, fields - 1);
 
     value ? setFieldValues(nextValue) : setFocusedFieldIdx(nextFocusedFieldIdx);
   };
 
   const handleLeftKeyDown = (idx: number) => {
-    const nextFocusedFieldIdx = getNextFocusedFieldIndex(idx, -1, fields - 1);
+    const nextFocusedFieldIdx = getNextFocusedFieldIdx(idx, -1, fields - 1);
 
     setFocusedFieldIdx(nextFocusedFieldIdx);
   };
 
   const handleRightKeyDown = (idx: number) => {
-    const nextFocusedFieldIdx = getNextFocusedFieldIndex(idx, 1, fields - 1);
+    const nextFocusedFieldIdx = getNextFocusedFieldIdx(idx, 1, fields - 1);
 
     setFocusedFieldIdx(nextFocusedFieldIdx);
   };
@@ -115,9 +72,9 @@ export const ReactCodeField = ({
     let nextFocusedFieldIdx;
 
     if (shiftKey) {
-      nextFocusedFieldIdx = getNextFocusedFieldIndex(idx, -1, fields - 1);
+      nextFocusedFieldIdx = getNextFocusedFieldIdx(idx, -1, fields - 1);
     } else {
-      nextFocusedFieldIdx = getNextFocusedFieldIndex(idx, 1, fields - 1);
+      nextFocusedFieldIdx = getNextFocusedFieldIdx(idx, 1, fields - 1);
     }
 
     setFocusedFieldIdx(nextFocusedFieldIdx);
@@ -129,23 +86,23 @@ export const ReactCodeField = ({
     const idx = Number(event.currentTarget.dataset.idx);
 
     switch (keyCode) {
-      case BACKSPACE_KEY:
+      case KEYS.BACKSPACE:
         event.preventDefault();
         handleBackspaceKeyDown(value, idx);
         break;
-      case LEFT_ARROW:
+      case KEYS.LEFT_ARROW:
         event.preventDefault();
         handleLeftKeyDown(idx);
         break;
-      case RIGHT_ARROW:
+      case KEYS.RIGHT_ARROW:
         event.preventDefault();
         handleRightKeyDown(idx);
         break;
-      case TAB_KEY:
+      case KEYS.TAB:
         event.preventDefault();
         handleTabKeyDown(idx, event.shiftKey);
         break;
-      case E_KEY:
+      case KEYS.E:
         if (inputType === "number") {
           event.preventDefault();
         }
@@ -189,7 +146,7 @@ export const ReactCodeField = ({
   }, [fieldValues, onChange]);
 
   return (
-    <div className={containerClassName}>
+    <div className={className}>
       {fieldValues.map((value, idx) => (
         <input
           key={idx}
