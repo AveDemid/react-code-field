@@ -107,10 +107,15 @@ export const ReactCodeField = ({
         event.preventDefault();
         handleTabKeyDown(idx, event.shiftKey);
         break;
+      case KEYS.PLUS:
+      case KEYS.MINUS:
+      case KEYS.COMMA:
+      case KEYS.POINT:
       case KEYS.E:
         if (inputType === "number") {
           event.preventDefault();
         }
+        break;
     }
   };
 
