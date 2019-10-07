@@ -7,6 +7,7 @@ import { IReactCodeField } from "./types";
 export const ReactCodeField = ({
   fields,
   onChange,
+  onLastChange,
   inputType,
   listBannedChars,
   className,
@@ -44,6 +45,10 @@ export const ReactCodeField = ({
       handledValue.length,
       fields - 1
     );
+
+    if (idx === fields - 1 && onLastChange) {
+      onLastChange();
+    }
 
     setFieldValues(nextFieldValues);
     setFocusedFieldIdx(nextFocusedFieldIdx);
