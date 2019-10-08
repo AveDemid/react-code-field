@@ -22,14 +22,20 @@ export const getNextFocusedFieldIdx = (
   return lastIndex;
 };
 
-export const changeValueInArr = (
-  arr: string[],
-  newValue: string,
-  idx: number
-) => {
+export const changeValueInArr = (arr: string[], newValue: string, idx: number) => {
   if (idx < 0 || idx > arr.length - 1) {
     return [...arr];
   }
 
   return Object.assign([...arr], { [idx]: newValue });
+};
+
+export const getFilteredValue = (list: string[], listBannedChars?: string[]) => {
+  let filteredValue = [...list];
+
+  if (listBannedChars) {
+    filteredValue = filteredValue.filter(char => !listBannedChars.includes(char));
+  }
+
+  return filteredValue;
 };
