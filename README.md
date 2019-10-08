@@ -1,28 +1,34 @@
 # react-code-field
+
 A predictable input field for codes, PIN codes, promotional codes, and the like.
 
 ## WARNING
+
 Still in alpha version, api changes every update, don't use in production
 
 ## Props:
 
-| Property           | Type     |
-| :----------------- | :------- |
-| type               | string   |
-| fields             | number   |
-| value              | string   |
-| onChange           | func     |
-| containerClassName | string   |
-| inputClassName     | string   |
-| listBannedChars    | string[] |
+| Property         | Type     |
+| :--------------- | :------- |
+| fields           | number   |
+| type?            | string   |
+| className?       | string   |
+| inputClassName?  | string   |
+| listBannedChars? | string[] |
+| onChange?        | func     |
+| onLastChange?    | func     |
 
 ## TODO:
-
-[х] add character filtering
-[ ] add the ability to set a default value
-[ ] write functional tests
-[ ] write unit tests
-[ ] add the ability to force characters to uppercase
-[ ] add the ability to integrate with formik and other form managers
+-[x] add character filtering 
+-[x] add the ability to call callback when the last input is changed 
+-[ ] add the ability to set a default value 
+-[ ] add the ability to force characters to uppercase 
+-[ ] add the ability to integrate with formik and other form managers
+-[ ] add the ability to turn autofocus on and off
+-[ ] add typescript support
+-[ ] write functional tests 
+-[ ] write unit tests 
+-[ ] create live demo
+-[ ] create complete README
 
 If you have questions or suggestions, create a issue.

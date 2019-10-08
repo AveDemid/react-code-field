@@ -26,7 +26,7 @@ export const ReactCodeField = ({
     const nextFieldValues = mergeArrays(fieldValues, filteredValue, idx);
     const nextFocusedFieldIdx = getNextFocusedFieldIdx(idx, filteredValue.length, fields - 1);
 
-    if (nextFocusedFieldIdx === fields - 1 && onLastChange) {
+    if (nextFieldValues[fields - 1] !== "" && onLastChange) {
       onLastChange();
     }
 
