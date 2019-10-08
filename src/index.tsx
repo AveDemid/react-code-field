@@ -20,6 +20,7 @@ export const ReactCodeField = ({
   const [fieldValues, setFieldValues] = useState<string[]>(Array(fields).fill(""));
   const [focusedFieldIdx, setFocusedFieldIdx] = useState<number>(0);
   const [isComponentInit, setIsComponentInit] = useState<boolean>(false);
+  const [isComponentTouched, setIsComponentTouched] = useState<boolean>(false);
 
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
@@ -36,6 +37,7 @@ export const ReactCodeField = ({
 
     setFieldValues(nextFieldValues);
     setFocusedFieldIdx(nextFocusedFieldIdx);
+    setIsComponentTouched(true);
   };
 
   const handleBackspaceKeyDown = (value: string, idx: number) => {
@@ -155,7 +157,7 @@ export const ReactCodeField = ({
   ]);
 
   useLayoutEffect(() => {
-    if (!autoFocus && focusedFieldIdx === 0) {
+    if (!autoFocus && !isComponentTouched) {
       return;
     }
 
@@ -163,7 +165,7 @@ export const ReactCodeField = ({
       fieldRefs.current[focusedFieldIdx].focus();
       fieldRefs.current[focusedFieldIdx].select();
     }
-  }, [autoFocus, focusedFieldIdx, isComponentInit]);
+  }, [autoFocus, focusedFieldIdx, isComponentTouched]);
 
   useEffect(() => {
     if (onChange) {
