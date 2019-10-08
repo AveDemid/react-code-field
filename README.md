@@ -16,6 +16,7 @@ Still in alpha version, api changes every update, don't use in production
 | className?       | string   |
 | inputClassName?  | string   |
 | listBannedChars? | string[] |
+| forceUpperCase   | string   |
 | onChange?        | func     |
 | onLastChange?    | func     |
 
@@ -24,7 +25,7 @@ Still in alpha version, api changes every update, don't use in production
 - [x] add character filtering
 - [x] add the ability to call callback when the last input is changed
 - [x] add the ability to set a initial value
-- [ ] add the ability to force characters to uppercase
+- [x] add the ability to force characters to uppercase
 - [ ] add the ability to integrate with formik and other form managers
 - [ ] add the ability to turn autofocus on and off
 - [ ] add typescript support
