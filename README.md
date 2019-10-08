@@ -16,7 +16,8 @@ Still in alpha version, api changes every update, don't use in production
 | className?       | string   |
 | inputClassName?  | string   |
 | listBannedChars? | string[] |
-| forceUpperCase   | string   |
+| forceUpperCase?  | boolean  |
+| autoFocus?       | boolean  |
 | onChange?        | func     |
 | onLastChange?    | func     |
 
@@ -27,7 +28,7 @@ Still in alpha version, api changes every update, don't use in production
 - [x] add the ability to set a initial value
 - [x] add the ability to force characters to uppercase
 - [ ] add the ability to integrate with formik and other form managers
-- [ ] add the ability to turn autofocus on and off
+- [x] add the ability to turn autofocus on and off
 - [ ] add typescript support
 - [ ] write functional tests
 - [ ] write unit tests

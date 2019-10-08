@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/interface-name-prefix
 export interface IReactCodeField {
   fields: number;
   type?: "text" | "number" | "password" | "phone";
@@ -6,6 +7,7 @@ export interface IReactCodeField {
   inputClassName?: string;
   listBannedChars?: string[];
   forceUpperCase?: boolean;
+  autoFocus?: boolean;
   onChange?(s: string): void;
   onLastChange?(): void;
 }

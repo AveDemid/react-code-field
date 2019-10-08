@@ -12,6 +12,7 @@ export const ReactCodeField = ({
   className,
   inputClassName,
   forceUpperCase,
+  autoFocus,
   onChange,
   onLastChange
 }: IReactCodeField) => {
@@ -136,17 +137,33 @@ export const ReactCodeField = ({
       const nextFocusedFieldIdx = getNextFocusedFieldIdx(0, filteredValue.length, fields - 1);
 
       setFieldValues(nextFieldValues);
-      setFocusedFieldIdx(nextFocusedFieldIdx);
+
+      if (autoFocus) {
+        setFocusedFieldIdx(nextFocusedFieldIdx);
+      }
+
       setIsComponentInit(true);
     }
-  }, [isComponentInit, fieldValues, fields, listBannedChars, initialValue, forceUpperCase]);
+  }, [
+    isComponentInit,
+    fieldValues,
+    fields,
+    listBannedChars,
+    initialValue,
+    forceUpperCase,
+    autoFocus
+  ]);
 
   useLayoutEffect(() => {
+    if (!autoFocus && focusedFieldIdx === 0) {
+      return;
+    }
+
     if (fieldRefs.current[focusedFieldIdx]) {
       fieldRefs.current[focusedFieldIdx].focus();
       fieldRefs.current[focusedFieldIdx].select();
     }
-  }, [focusedFieldIdx]);
+  }, [autoFocus, focusedFieldIdx, isComponentInit]);
 
   useEffect(() => {
     if (onChange) {
