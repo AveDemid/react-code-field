@@ -1,52 +1,32 @@
 import React, { useState, useRef, useEffect } from "react";
 
 import { KEYS } from "./keys";
-import { mergeArrays, getNextFocusedFieldIdx, changeValueInArr } from "./utils";
+import { mergeArrays, getNextFocusedFieldIdx, changeValueInArr, getFilteredValue } from "./utils";
 import { IReactCodeField } from "./types";
 
 export const ReactCodeField = ({
   fields,
   onChange,
   onLastChange,
-  inputType,
+  type,
   listBannedChars,
   className,
   inputClassName
 }: IReactCodeField) => {
   const fieldRefs = useRef<HTMLInputElement[]>([]);
-
-  const [fieldValues, setFieldValues] = useState<string[]>(
-    Array(fields).fill("")
-  );
-
+  const [fieldValues, setFieldValues] = useState<string[]>(Array(fields).fill(""));
   const [focusedFieldIdx, setFocusedFieldIdx] = useState<number>(0);
 
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
-
     const idx = Number(event.target.dataset.idx);
-    let handledValue = event.target.value.split("");
+    const value = event.target.value.split("");
 
-    if (inputType === "number") {
-      handledValue = handledValue.filter(element => {
-        return typeof +element === "number" && isFinite(+element);
-      });
-    }
+    const filteredValue = getFilteredValue(value, listBannedChars);
+    const nextFieldValues = mergeArrays(fieldValues, filteredValue, idx);
+    const nextFocusedFieldIdx = getNextFocusedFieldIdx(idx, filteredValue.length, fields - 1);
 
-    if (listBannedChars) {
-      handledValue = handledValue.filter(element => {
-        return !listBannedChars.includes(element);
-      });
-    }
-
-    const nextFieldValues = mergeArrays(fieldValues, handledValue, idx);
-    const nextFocusedFieldIdx = getNextFocusedFieldIdx(
-      idx,
-      handledValue.length,
-      fields - 1
-    );
-
-    if (idx === fields - 1 && onLastChange) {
+    if (nextFocusedFieldIdx === fields - 1 && onLastChange) {
       onLastChange();
     }
 
@@ -112,7 +92,7 @@ export const ReactCodeField = ({
       case KEYS.COMMA:
       case KEYS.POINT:
       case KEYS.E:
-        if (inputType === "number") {
+        if (type === "number") {
           event.preventDefault();
         }
         break;
@@ -161,7 +141,7 @@ export const ReactCodeField = ({
         <input
           key={idx}
           data-idx={idx}
-          type={inputType}
+          type={type}
           value={value}
           ref={node => {
             node && fieldRefs && fieldRefs.current.push(node);

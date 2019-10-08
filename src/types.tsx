@@ -1,9 +1,11 @@
 export interface IReactCodeField {
   fields: number;
-  onChange?(s: string): void;
-  onLastChange?(): void;
-  inputType?: "text" | "password" | "number";
+  type?: "text" | "number" | "password" | "phone";
+  value?: string;
+  name?: string;
   listBannedChars?: string[];
   className?: string;
   inputClassName?: string;
+  onChange?(s: string): void;
+  onLastChange?(): void;
 }
