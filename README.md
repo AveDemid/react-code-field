@@ -29,7 +29,7 @@ Still in alpha version, api changes every update, don't use in production
 - [x] add the ability to force characters to uppercase
 - [ ] add the ability to integrate with formik and other form managers
 - [x] add the ability to turn autofocus on and off
-- [ ] add typescript support
+- [x] add typescript support
 - [ ] write functional tests
 - [ ] write unit tests
 - [ ] create live demo
