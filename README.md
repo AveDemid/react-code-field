@@ -12,6 +12,7 @@ Still in alpha version, api changes every update, don't use in production
 | :--------------- | :------- |
 | fields           | number   |
 | type?            | string   |
+| initialValue     | string   |
 | className?       | string   |
 | inputClassName?  | string   |
 | listBannedChars? | string[] |
@@ -19,16 +20,17 @@ Still in alpha version, api changes every update, don't use in production
 | onLastChange?    | func     |
 
 ## TODO:
--[x] add character filtering 
--[x] add the ability to call callback when the last input is changed 
--[ ] add the ability to set a default value 
--[ ] add the ability to force characters to uppercase 
--[ ] add the ability to integrate with formik and other form managers
--[ ] add the ability to turn autofocus on and off
--[ ] add typescript support
--[ ] write functional tests 
--[ ] write unit tests 
--[ ] create live demo
--[ ] create complete README
+
+- [x] add character filtering
+- [x] add the ability to call callback when the last input is changed
+- [x] add the ability to set a initial value
+- [ ] add the ability to force characters to uppercase
+- [ ] add the ability to integrate with formik and other form managers
+- [ ] add the ability to turn autofocus on and off
+- [ ] add typescript support
+- [ ] write functional tests
+- [ ] write unit tests
+- [ ] create live demo
+- [ ] create complete README
 
 If you have questions or suggestions, create a issue.
