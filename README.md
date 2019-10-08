@@ -16,6 +16,7 @@ Still in alpha version, api changes every update, don't use in production
 | className?       | string   |
 | inputClassName?  | string   |
 | listBannedChars? | string[] |
+| forceUpperCase   | string   |
 | onChange?        | func     |
 | onLastChange?    | func     |
 
