@@ -1,18 +1,19 @@
 import React, { useState, useRef, useEffect, useLayoutEffect } from "react";
 
 import { KEYS } from "./keys";
-import { mergeArrays, getNextFocusedFieldIdx, changeValueInArr, getFilteredValue } from "./utils";
+import { mergeArrays, getNextFocusedFieldIdx, changeValueInArr, getFormattedValue } from "./utils";
 import { IReactCodeField } from "./types";
 
 export const ReactCodeField = ({
   fields,
   initialValue,
-  onChange,
-  onLastChange,
   type,
   listBannedChars,
   className,
-  inputClassName
+  inputClassName,
+  forceUpperCase,
+  onChange,
+  onLastChange
 }: IReactCodeField) => {
   const fieldRefs = useRef<HTMLInputElement[]>([]);
   const [fieldValues, setFieldValues] = useState<string[]>(Array(fields).fill(""));
@@ -24,7 +25,7 @@ export const ReactCodeField = ({
     const idx = Number(event.target.dataset.idx);
     const value = event.target.value.split("");
 
-    const filteredValue = getFilteredValue(value, listBannedChars);
+    const filteredValue = getFormattedValue(value, listBannedChars, forceUpperCase);
     const nextFieldValues = mergeArrays(fieldValues, filteredValue, idx);
     const nextFocusedFieldIdx = getNextFocusedFieldIdx(idx, filteredValue.length, fields - 1);
 
@@ -126,7 +127,11 @@ export const ReactCodeField = ({
 
   useLayoutEffect(() => {
     if (initialValue && !isComponentInit) {
-      const filteredValue = getFilteredValue(initialValue.split(""), listBannedChars);
+      const filteredValue = getFormattedValue(
+        initialValue.split(""),
+        listBannedChars,
+        forceUpperCase
+      );
       const nextFieldValues = mergeArrays(fieldValues, filteredValue, 0);
       const nextFocusedFieldIdx = getNextFocusedFieldIdx(0, filteredValue.length, fields - 1);
 
@@ -134,7 +139,7 @@ export const ReactCodeField = ({
       setFocusedFieldIdx(nextFocusedFieldIdx);
       setIsComponentInit(true);
     }
-  }, [isComponentInit, fieldValues, fields, listBannedChars, initialValue]);
+  }, [isComponentInit, fieldValues, fields, listBannedChars, initialValue, forceUpperCase]);
 
   useLayoutEffect(() => {
     if (fieldRefs.current[focusedFieldIdx]) {

@@ -30,11 +30,19 @@ export const changeValueInArr = (arr: string[], newValue: string, idx: number) =
   return Object.assign([...arr], { [idx]: newValue });
 };
 
-export const getFilteredValue = (list: string[], listBannedChars?: string[]) => {
+export const getFormattedValue = (
+  list: string[],
+  listBannedChars?: string[],
+  isForceUpperCase?: boolean
+) => {
   let filteredValue = [...list];
 
   if (listBannedChars) {
     filteredValue = filteredValue.filter(char => !listBannedChars.includes(char));
+  }
+
+  if (isForceUpperCase) {
+    filteredValue = filteredValue.map(char => char.toUpperCase());
   }
 
   return filteredValue;

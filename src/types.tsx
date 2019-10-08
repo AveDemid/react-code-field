@@ -5,6 +5,7 @@ export interface IReactCodeField {
   className?: string;
   inputClassName?: string;
   listBannedChars?: string[];
+  forceUpperCase?: boolean;
   onChange?(s: string): void;
   onLastChange?(): void;
 }
