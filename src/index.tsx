@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useLayoutEffect } from "react";
 
 import { KEYS } from "./keys";
 import { mergeArrays, getNextFocusedFieldIdx, changeValueInArr, getFilteredValue } from "./utils";
@@ -6,6 +6,7 @@ import { IReactCodeField } from "./types";
 
 export const ReactCodeField = ({
   fields,
+  initialValue,
   onChange,
   onLastChange,
   type,
@@ -16,6 +17,7 @@ export const ReactCodeField = ({
   const fieldRefs = useRef<HTMLInputElement[]>([]);
   const [fieldValues, setFieldValues] = useState<string[]>(Array(fields).fill(""));
   const [focusedFieldIdx, setFocusedFieldIdx] = useState<number>(0);
+  const [isComponentInit, setIsComponentInit] = useState<boolean>(false);
 
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
@@ -122,7 +124,19 @@ export const ReactCodeField = ({
     }
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
+    if (initialValue && !isComponentInit) {
+      const filteredValue = getFilteredValue(initialValue.split(""), listBannedChars);
+      const nextFieldValues = mergeArrays(fieldValues, filteredValue, 0);
+      const nextFocusedFieldIdx = getNextFocusedFieldIdx(0, filteredValue.length, fields - 1);
+
+      setFieldValues(nextFieldValues);
+      setFocusedFieldIdx(nextFocusedFieldIdx);
+      setIsComponentInit(true);
+    }
+  }, [isComponentInit, fieldValues, fields, listBannedChars, initialValue]);
+
+  useLayoutEffect(() => {
     if (fieldRefs.current[focusedFieldIdx]) {
       fieldRefs.current[focusedFieldIdx].focus();
       fieldRefs.current[focusedFieldIdx].select();
