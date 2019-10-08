@@ -8,7 +8,7 @@
     // "allowJs": true,                       /* Allow javascript files to be compiled. */
     // "checkJs": true,                       /* Report errors in .js files. */
     "jsx": "react",
-    "declaration": true /* Generates corresponding '.d.ts' file. */,
+    "declaration": true,
     // "declarationMap": true,                /* Generates a sourcemap for each corresponding '.d.ts' file. */
     // "sourceMap": true,                     /* Generates corresponding '.map' file. */
     // "outFile": "./",                       /* Concatenate and emit output to single file. */
@@ -41,12 +41,6 @@
     /* Module Resolution Options */
     "moduleResolution": "node",
     "baseUrl": "./src",
-    "paths": {
-      "@features/*": ["./features/*"],
-      "@lib/*": ["./lib/*"],
-      "@ui/*": ["./ui/*"],
-      "@pages/*": ["./pages/*"]
-    },
     // "rootDirs": [],                        /* List of root folders whose combined content represents the structure of the project at runtime. */
     // "typeRoots": [],                       /* List of folders to include type definitions from. */
     "types": ["react"] /* Type declaration files to be included in compilation. */,
