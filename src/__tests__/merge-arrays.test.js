@@ -1,4 +1,4 @@
-import { mergeArrays } from "../utils";
+import { mergeArrays } from "./../";
 
 describe("It should merge the arrays correctly", () => {
   const arr1 = ["h", "e", "l", "l", "o"];

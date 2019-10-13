@@ -1,4 +1,4 @@
-import { changeValueInArr } from "../utils";
+import { changeValueInArr } from "./../";
 
 describe("It should correct pure change value in array by idx", () => {
   test("when the index enters the length of the array", () => {

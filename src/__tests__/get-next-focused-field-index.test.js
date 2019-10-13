@@ -1,4 +1,4 @@
-import { getNextFocusedFieldIdx } from "../utils";
+import { getNextFocusedFieldIdx } from "./../";
 
 describe("It should get correct next focused field idx", () => {
   test("when the offset is positive and less than the last index", () => {

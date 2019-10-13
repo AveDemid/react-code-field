@@ -1,8 +1,76 @@
 import React, { useState, useRef, useEffect, useLayoutEffect } from "react";
 
-import { KEYS } from "./keys";
-import { mergeArrays, getNextFocusedFieldIdx, changeValueInArr, getFormattedValue } from "./utils";
-import { IReactCodeField } from "./types";
+const KEYS = {
+  BACKSPACE: 8,
+  TAB: 9,
+  LEFT_ARROW: 37,
+  RIGHT_ARROW: 39,
+  E: 69,
+  PLUS: 187,
+  COMMA: 188,
+  MINUS: 189,
+  POINT: 190
+};
+
+export const mergeArrays = (arr1: string[], arr2: string[], offset: number) =>
+  arr1.map((oldValue, idx) =>
+    idx >= offset && arr2[idx - offset] ? arr2[idx - offset] : oldValue
+  );
+
+export const getNextFocusedFieldIdx = (
+  startPosition: number,
+  offset: number,
+  lastIndex: number
+) => {
+  if (startPosition + offset < 0) {
+    return 0;
+  }
+
+  if (startPosition + offset < lastIndex) {
+    return startPosition + offset;
+  }
+
+  return lastIndex;
+};
+
+export const changeValueInArr = (arr: string[], newValue: string, idx: number) => {
+  if (idx < 0 || idx > arr.length - 1) {
+    return [...arr];
+  }
+
+  return Object.assign([...arr], { [idx]: newValue });
+};
+
+export const getFormattedValue = (
+  list: string[],
+  listBannedChars?: string[],
+  isForceUpperCase?: boolean
+) => {
+  let filteredValue = [...list];
+
+  if (listBannedChars) {
+    filteredValue = filteredValue.filter(char => !listBannedChars.includes(char));
+  }
+
+  if (isForceUpperCase) {
+    filteredValue = filteredValue.map(char => char.toUpperCase());
+  }
+
+  return filteredValue;
+};
+
+interface IReactCodeField {
+  fields: number;
+  type?: "text" | "number" | "password" | "phone";
+  initialValue?: string;
+  className?: string;
+  inputClassName?: string;
+  listBannedChars?: string[];
+  forceUpperCase?: boolean;
+  autoFocus?: boolean;
+  onChange?(s: string): void;
+  onLastChange?(): void;
+}
 
 export const ReactCodeField = ({
   fields,
